@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Population {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  imga_ppltn       String?
+  adm_cd           String?
+  tot_house        String?
+  ppltn_dnsty      String?
+  tot_ppltn        String?
+  aged_child_idx   String?
+  corp_cnt         String?
+  imga_cnt         String?
+  employee_cnt     String?
+  haesuoga_cnt     String?
+  juv_suprt_per    String?
+  haesuoga_ppltn   String?
+  tot_family       String?
+  adm_nm           String?
+  nongga_cnt       String?
+  naesuoga_ppltn   String?
+  avg_age          String?
+  avg_fmember_cnt  String?
+  nongga_ppltn     String?
+  naesuoga_cnt     String?
+  oldage_suprt_per String?
+  year             String?
+}
