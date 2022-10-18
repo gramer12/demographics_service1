@@ -27,6 +27,31 @@ interface Population {
   oldage_suprt_per: string;
   year: string;
 }
+
+interface Population_In {
+  imga_ppltn: string;
+  adm_cd: string;
+  tot_house: string;
+  ppltn_dnsty: string;
+  tot_ppltn: string;
+  aged_child_idx: string;
+  corp_cnt: string;
+  imga_cnt: string;
+  employee_cnt: string;
+  haesuoga_cnt: string;
+  juv_suprt_per: string;
+  haesuoga_ppltn: string;
+  tot_family: string;
+  adm_nm: string;
+  nongga_cnt: string;
+  naesuoga_ppltn: string;
+  avg_age: string;
+  avg_fmember_cnt: string;
+  nongga_ppltn: string;
+  naesuoga_cnt: string;
+  oldage_suprt_per: string;
+  year: string;
+}
 const fetchData = async (adm_cd: string) => {
   console.log(adm_cd);
   const data = await fetch(`http://localhost:3000/api/${adm_cd}`)
@@ -39,28 +64,19 @@ export default function Map() {
   const [index, setIndex] = useState("");
   const [chartData, setChartData] = useState([]);
   const [load, setLoad] = useState(true);
-  //tot_ppltn, adm_nm, adm_cd
+  //tot_ppltn 인구수, adm_nm 이름, adm_cd 번호
 
   useEffect(() => {
     if (typeof window !== undefined) setLoad(false);
     fetchData(index).then((data) => setChartData(JSON.parse(data.resData)));
   }, [index]);
-  // useEffect(() => {
-  //   if (index) {
-  //     fetchData(index).then((data) => setChartData(JSON.parse(data.resData)));
-  //   }
-  // }, [index]);
 
   if (typeof window !== "undefined" && !load) {
     return (
       <>
         <div className="flex">
           <div className="flex items-end">
-            {index ? (
-              <Tester data={chartData} maxBarsize="10222222222" />
-            ) : (
-              <div>asd</div>
-            )}
+            {index ? <Tester data={chartData} /> : <div>asd</div>}
           </div>
           <svg
             xmlns="img/south-korea.svg"

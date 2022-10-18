@@ -32,6 +32,7 @@ export default async function handler(
       regoin.map((ele: Population) => ({
         year: ele.year,
         tot_ppltn: ele.tot_ppltn,
+        adm_nm: ele.adm_nm,
       }))
     );
 
