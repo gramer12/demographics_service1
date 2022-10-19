@@ -1,7 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 
 import React from "react";
-import { Tester } from "../component/rechart/Tester";
+// import { Tester } from "../component/rechart/singleBarChart";
+import { SingleBarChart } from "../component/rechart/singleBarChart";
+import SinglePieChart from "../component/rechart/singlePieChart";
 
 interface Population {
   imga_ppltn: string;
@@ -74,9 +76,10 @@ export default function Map() {
   if (typeof window !== "undefined" && !load) {
     return (
       <>
-        <div className="flex">
-          <div className="flex items-end">
-            {index ? <Tester data={chartData} /> : <div>asd</div>}
+        <div className="flex ">
+          <div className="flex  flex-col ">
+            <SinglePieChart></SinglePieChart>
+            {index ? <SingleBarChart data={chartData} /> : <div>asd</div>}
           </div>
           <svg
             xmlns="img/south-korea.svg"

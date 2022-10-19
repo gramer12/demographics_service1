@@ -13,7 +13,7 @@ interface ChartData {
   year: string;
   tot_ppltn: string;
 }
-export function Tester(props: any) {
+export function SingleBarChart(props: any) {
   // const data = [
   //   {
   //     year: "Page A",

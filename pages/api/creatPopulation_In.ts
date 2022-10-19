@@ -2,15 +2,16 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import client from "../../libs/server/client";
 import { Population } from "@prisma/client";
 import { useEffect, useState } from "react";
+import process from "process";
 interface Data {
   ok: boolean;
   error?: String;
   result?: Population;
 }
 
-const fetchData = async (year: string) => {
+const fetchData = async (adm_cd: string, year: string) => {
   const data = await fetch(
-    `https://sgisapi.kostat.go.kr/OpenAPI3/stats/population.json?accessToken=${process.env.accessToken}&year=${year}&low_search=1`
+    `https://sgisapi.kostat.go.kr/OpenAPI3/stats/population.json?accessToken=${process.env.accessToken}&year=${year}&adm_cd=${adm_cd}&low_search=1`
   )
     .then((res: any) => res.json())
     .then((json: any) => json.result);
@@ -44,20 +45,28 @@ export default async function handler(
       "2019",
       "2020",
     ];
-    for (const year of yearArr) {
-      fetchData(year).then(async (apiData) => {
-        apiData = apiData.map((ele: Population) => {
-          ele.year = year;
-          return ele;
-        });
-        console.log(apiData);
+    const admCdArr: string[] = [
+      //행정동 코드를 나열  후
+      // 다삽입 그리고
+      //어떻게 부모를 매칭할것인지 생각해야함
+    ];
+    const accessToken = process.env.accessToken;
+    for (const adm_cd of admCdArr) {
+      for (const year of yearArr) {
+        fetchData(adm_cd, year).then(async (apiData) => {
+          apiData = apiData.map((ele: Population) => {
+            ele.year = year;
+            return ele;
+          });
 
-        const Population = await client.population.createMany({
-          data: apiData,
+          console.log(apiData);
+
+          const Population = await client.population.createMany({
+            data: apiData,
+          });
         });
-      });
+      }
     }
-
     // console.log(apiData);
 
     response.status(200).json({ ok: true });
